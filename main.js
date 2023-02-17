@@ -28,14 +28,51 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const generateHint = () =>  {
-  // your code here
+const generateHint = (guess) =>  {
+  let solutionArray = solution.split('');    //['a','b','c','d']
+  let guessArray = guess.split('');         //['a','d','b','c']
+  let correctLettersLocations = 0 ;         // how many correct "letter-locations" were guessed
+  let correctLetters = 0 ;                  //  how many correct "letters" not in the correct location
+// compare the values at each index with a for loop
+for ( let i=0; i < solutionArray.length; i++) {
+
+  if (solutionArray[i]=== guessArray[i]) {
+    correctLettersLocations++; 
+    solutionArray[i] = null;
+  }
 }
+  // check for correct letters in the wrong location
+for ( let i=0; i < solutionArray.length; i++) {
+  // returns the first index at which a given 
+  // elememt can be found in the array, or -1 if it is not present
+  let targetIndex =  solutionArray.indexOf(guessArray[i])
+  if(targetIndex > -1) {
+    correctLetters++;
+    solutionArray[targetIndex] = null;
+  }
+}
+  console.log('You have' + correctLettersLocations + ' letters in the right place, and ' 
+  + correctLetters + 'correct letters in the wrong place' )
+  return correctLettersLocations + '-' + correctLetters;
+}
+
 
 const mastermind = (guess) => {
   solution = 'abcd'; // Comment this out to generate a random solution
   // your code here
-}
+ let hint = generateHint(guess);
+  
+  // Place hint and guess together
+  let guessHint = 'guess' + 'hint';
+
+  // Place guess to the board 
+  board.push(guessHint);
+  if(guess === solution){ 
+    console.log("You guessed it!");
+    return 'You guessed it!';
+  }else{ 
+    return false;}
+} 
 
 
 const getPrompt = () =>  {
